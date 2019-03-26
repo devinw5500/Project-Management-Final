@@ -69,49 +69,6 @@ public class cardEditor extends javax.swing.JFrame {
             }
         });
 
-        termTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {"Term 1", "[Definition 1]"},
-                {"Term 2", null},
-                {"Term 3", null},
-                {"Term 4", null},
-                {"Term 5", null},
-                {"Term 6", null},
-                {"Term 7", null},
-                {"Term 8", null},
-                {"Term 9", null},
-                {"Term 10", null},
-                {"Term 11", null},
-                {"Term 12", null},
-                {"Term 13", null},
-                {"Term 14", null},
-                {"Term 15", null},
-                {"Term 16", null},
-                {"Term 17", null},
-                {"Term 18", null},
-                {"Term 19", null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
-            },
-            new String [] {
-                "Term", "Definition"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
         termTable.setColumnSelectionAllowed(true);
         termTable.getTableHeader().setReorderingAllowed(false);
         jScrollPane3.setViewportView(termTable);
