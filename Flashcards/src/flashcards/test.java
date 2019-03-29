@@ -5,19 +5,22 @@
  */
 package flashcards;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author djluk
  */
 public class test extends javax.swing.JFrame {
 
+    private static ArrayList<CardEntry> cards = new ArrayList<CardEntry>();
     /**
      * Creates new form test
      */
     public test() {
         initComponents();
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -30,6 +33,8 @@ public class test extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
+        labelText = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
@@ -58,15 +63,29 @@ public class test extends javax.swing.JFrame {
             }
         });
 
+        labelText.setText("front");
+
+        jLabel2.setText("Click to flip");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(172, 172, 172)
+                .addComponent(labelText)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jLabel2))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 196, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(90, 90, 90)
+                .addComponent(labelText)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 76, Short.MAX_VALUE)
+                .addComponent(jLabel2))
         );
 
         jMenu1.setText("File");
@@ -108,15 +127,15 @@ public class test extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 //previous button
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        System.out.println("it go prev");
     }//GEN-LAST:event_jButton1ActionPerformed
 //next button
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
+        System.out.println("it go next");
     }//GEN-LAST:event_jButton3ActionPerformed
-
+//flip card
     private void jPanel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseClicked
-        System.out.println("yo u flipped it");
+        labelText.setText("it flip");
     }//GEN-LAST:event_jPanel1MouseClicked
 
     /**
@@ -145,21 +164,27 @@ public class test extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(test.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
+        
+        
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new test().setVisible(true);
             }
         });
+        cards.add(new CardEntry("word1","definition1"));
+        cards.add(new CardEntry("word2","definition2"));
+        labelText.setText("not flip");
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JPanel jPanel1;
+    private static javax.swing.JPanel jPanel1;
+    private static javax.swing.JLabel labelText;
     // End of variables declaration//GEN-END:variables
 }
