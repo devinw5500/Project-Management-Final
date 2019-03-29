@@ -5,19 +5,22 @@
  */
 package flashcards;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author djluk
  */
 public class test extends javax.swing.JFrame {
 
+    private static ArrayList<CardEntry> cards = new ArrayList<CardEntry>();
     /**
      * Creates new form test
      */
     public test() {
         initComponents();
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -27,13 +30,17 @@ public class test extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel2 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
+        labelText = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
+
+        jLabel2.setText("Click to flip");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -41,13 +48,6 @@ public class test extends javax.swing.JFrame {
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
-            }
-        });
-
-        jButton2.setText("Flip");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
             }
         });
 
@@ -60,19 +60,49 @@ public class test extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(102, 0, 102));
         jPanel1.setForeground(new java.awt.Color(255, 255, 255));
+        jPanel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel1MouseClicked(evt);
+            }
+        });
+
+        labelText.setBackground(new java.awt.Color(255, 255, 255));
+        labelText.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        labelText.setForeground(new java.awt.Color(255, 255, 255));
+        labelText.setText("front");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(172, 172, 172)
+                .addComponent(labelText)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 196, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(90, 90, 90)
+                .addComponent(labelText)
+                .addContainerGap(91, Short.MAX_VALUE))
         );
 
         jMenu1.setText("File");
+        jMenu1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenu1ActionPerformed(evt);
+            }
+        });
+
+        jMenuItem1.setText("Exit");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem1);
+
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Edit");
@@ -91,40 +121,51 @@ public class test extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(99, 99, 99)
                 .addComponent(jButton1)
-                .addGap(18, 18, 18)
-                .addComponent(jButton2)
-                .addGap(18, 18, 18)
+                .addGap(86, 86, 86)
                 .addComponent(jButton3)
                 .addContainerGap(98, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(22, Short.MAX_VALUE)
+                .addContainerGap(15, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
-                    .addComponent(jButton2)
                     .addComponent(jButton3))
                 .addContainerGap())
         );
+
+        startUp();
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 //previous button
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        System.out.println("it go prev");
     }//GEN-LAST:event_jButton1ActionPerformed
 //next button
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
+        System.out.println("it go next");
     }//GEN-LAST:event_jButton3ActionPerformed
-//flip button
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+//flip card
+    private void jPanel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseClicked
+        labelText.setText("it flip");
+    }//GEN-LAST:event_jPanel1MouseClicked
+//exits program
+    private void jMenu1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu1ActionPerformed
+        //does nothing
+    }//GEN-LAST:event_jMenu1ActionPerformed
 
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+//called in start up
+    private void startUp(){
+        labelText.setText("not flip");
+        
+    }
     /**
      * @param args the command line arguments
      */
@@ -151,22 +192,28 @@ public class test extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(test.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
+        
+        
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new test().setVisible(true);
             }
         });
+        cards.add(new CardEntry("word1","definition1"));
+        cards.add(new CardEntry("word2","definition2"));
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private static javax.swing.JPanel jPanel1;
+    private static javax.swing.JLabel labelText;
     // End of variables declaration//GEN-END:variables
 }
