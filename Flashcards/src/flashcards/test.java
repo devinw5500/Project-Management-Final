@@ -66,6 +66,9 @@ public class test extends javax.swing.JFrame {
             }
         });
 
+        labelText.setBackground(new java.awt.Color(255, 255, 255));
+        labelText.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        labelText.setForeground(new java.awt.Color(255, 255, 255));
         labelText.setText("front");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -125,7 +128,7 @@ public class test extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(22, Short.MAX_VALUE)
+                .addContainerGap(15, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
