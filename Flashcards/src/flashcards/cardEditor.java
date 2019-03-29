@@ -8,14 +8,15 @@ package flashcards;
 import java.io.File;
 import javax.swing.DefaultListModel;
 import javax.swing.table.DefaultTableModel;
+import java.util.ArrayList;
 
 public class cardEditor extends javax.swing.JFrame {
-
+    FileIO data = new FileIO();
     /**
      * Creates new form NewJFrame
      */
     public cardEditor() {
-        initComponents();
+        initComponents();       
     }
 
     /**
@@ -101,10 +102,14 @@ public class cardEditor extends javax.swing.JFrame {
         });
 
         DefaultListModel model = new DefaultListModel();
-        File f = new File(System.getenv("APPDATA") + "\\flashcards");
-        File[] fileList = f.listFiles();
-        for(File n : fileList) {
-            model.addElement(n.getName());
+        try {
+            ArrayList<String> list = data.fetchSets();
+            for(String n : list) {
+                model.addElement(n);
+            }
+        }
+        catch (NullPointerException e){
+            model.addElement("Empty");
         }
         jList1.setModel(model);
         jList1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);

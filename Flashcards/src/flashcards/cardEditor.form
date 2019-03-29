@@ -206,7 +206,7 @@
             <Property name="selectionMode" type="int" value="0"/>
           </Properties>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="DefaultListModel model = new DefaultListModel(); &#xa;File f = new File(System.getenv(&quot;APPDATA&quot;) + &quot;\\flashcards&quot;); &#xa;File[] fileList = f.listFiles(); &#xa;    for(File n : fileList) {     &#xa;model.addElement(n.getName()); &#xa;}"/>
+            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="DefaultListModel model = new DefaultListModel();&#xa;try {&#xa;ArrayList&lt;String&gt; list = data.fetchSets();&#xa;    for(String n : list) {     &#xa;        model.addElement(n);&#xa;}&#xa;}&#xa;catch (NullPointerException e){&#xa;    model.addElement(&quot;Empty&quot;);&#xa;}"/>
             <AuxValue name="JavaCodeGenerator_SerializeTo" type="java.lang.String" value="cardEditor_jList1"/>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>
