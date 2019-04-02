@@ -5,7 +5,7 @@
  */
 package flashcards;
 
-import static flashcards.FileIO.*;
+
 import java.util.ArrayList;
 
 /**
@@ -14,6 +14,7 @@ import java.util.ArrayList;
  */
 public class test extends javax.swing.JFrame {
 
+    FileIO fileio = new FileIO();
     //int used for fetching cards
     public int x = 0;
     public String word, def;
@@ -149,14 +150,14 @@ public class test extends javax.swing.JFrame {
 //previous button
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         
-        int size = fetchSetLength();
+        int size = fileio.fetchSetLength();
         if (size != 0)
         {
             if(x == 0)
                 x = size - 1;
             else
                 x--;
-            CardEntry scream = fetchCard(x);
+            CardEntry scream = fileio.fetchCard(x);
             word = scream.getWord();
             def = scream.getDef();
             labelText.setText(word);
@@ -165,7 +166,7 @@ public class test extends javax.swing.JFrame {
 //next button
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         
-        int size = fetchSetLength();
+        int size = fileio.fetchSetLength();
         if (size != 0)
         {
             //adds one to x
@@ -174,7 +175,7 @@ public class test extends javax.swing.JFrame {
             else
                 x++;
             //uses variable to fetch next card
-            CardEntry scream = fetchCard(x);
+            CardEntry scream = fileio.fetchCard(x);
             word = scream.getWord();
             def = scream.getDef();
             labelText.setText(word);
