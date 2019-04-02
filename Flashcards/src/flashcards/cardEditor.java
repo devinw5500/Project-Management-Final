@@ -33,8 +33,8 @@ public class cardEditor extends javax.swing.JFrame {
         remSetButton = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         jScrollPane3 = new javax.swing.JScrollPane();
-        Object[][] data = new Object[1][3];
-        String[] headers = {"Color", "Word", "Definition"};
+        Object[][] data = new Object[1][2];
+        String[] headers = {"Word", "Definition"};
         termTable = new javax.swing.JTable(data, headers);
         addButton = new javax.swing.JButton();
         remButton = new javax.swing.JButton();
@@ -170,15 +170,13 @@ public class cardEditor extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
-        Object[][] temp = new Object[data.length+1][3];
+        Object[][] temp = new Object[data.length+1][2];
         for (int i = 0; i < data.length; i++){
             temp[i][0] = data[i][0];
             temp[i][1] = data[i][1];
-            temp[i][2] = data[i][2];
         }
-        temp[data.length][0] = Color.BLACK;
-        temp[data.length][1] = "[insert word]";
-        temp[data.length][2] = "[insert definition]";
+        temp[data.length][0] = "[insert word]";
+        temp[data.length][1] = "[insert definition]";
         
         data = temp;
         termTable.setModel(new TableModel(data));
@@ -186,7 +184,7 @@ public class cardEditor extends javax.swing.JFrame {
 
     private void remButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_remButtonActionPerformed
         if (data.length >= 2) {
-            Object[][] temp = new Object[data.length - 1][3];
+            Object[][] temp = new Object[data.length - 1][2];
             int found = 0;
             for (int i = 0, ii = 0; i < data.length; i++) {
               System.out.println("Selected row: " + termTable.getSelectedRow());
@@ -196,7 +194,7 @@ public class cardEditor extends javax.swing.JFrame {
                 }else{
                     temp[i - found][0] = data[i][0];
                     temp[i - found][1] = data[i][1];
-                    temp[i - found][2] = data[i][2];
+
                 }
                 /*temp[i][0] = data[ii][0];
                 temp[i][1] = data[ii][1];
@@ -217,17 +215,27 @@ public class cardEditor extends javax.swing.JFrame {
 
     private void jList1ValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jList1ValueChanged
         ArrayList<CardEntry> cards = loadSet(jList1.getSelectedValue().toString());
-        data = new Object[cards.size()][3];
+        data = new Object[cards.size()][2];
         for (int c = 0; c < cards.size(); c++){
-            data[c][0] = cards.get(c).getColor();
-            data[c][1] = cards.get(c).getWord();
-            data[c][2] = cards.get(c).getDef();
+            data[c][0] = cards.get(c).getWord();
+            data[c][1] = cards.get(c).getDef();
         };
         termTable.setModel(new TableModel(data));        
     }//GEN-LAST:event_jList1ValueChanged
 
     private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
-         
+        ArrayList<CardEntry> newSet = new ArrayList<CardEntry>();
+        for (int a = 0; a < termTable.getModel().getRowCount(); a++){
+            String addWord = termTable.getValueAt(a, 0).toString();
+            String addDef = termTable.getValueAt(a, 1).toString();
+            newSet.add(new CardEntry(addWord, addDef));            
+        }
+        updateSet(newSet);
+        
+        for (int x = 0; x < newSet.size(); x++){
+            System.out.println(newSet.get(x).getWord());
+            System.out.println(newSet.get(x).getDef() + "\n");
+        }
     }//GEN-LAST:event_okButtonActionPerformed
 
     

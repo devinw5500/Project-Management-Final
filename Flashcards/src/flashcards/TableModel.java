@@ -11,7 +11,7 @@ import javax.swing.table.AbstractTableModel;
 
 public class TableModel extends AbstractTableModel {
     Object[][] data;
-    String[] colNames = {"Color", "Word", "Definition"};
+    String[] colNames = {"Word", "Definition"};
     
     public TableModel(Object[][] data){
         this.data = data;
