@@ -13,6 +13,8 @@ import java.util.ArrayList;
  */
 public class test extends javax.swing.JFrame {
 
+    //int used for fetching cards
+    public int x = 0;
     private static ArrayList<CardEntry> cards = new ArrayList<CardEntry>();
     /**
      * Creates new form test
@@ -144,10 +146,17 @@ public class test extends javax.swing.JFrame {
 //previous button
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         System.out.println("it go prev");
+        if(x == 0)
+            System.out.print("");
+        else
+            x--;
     }//GEN-LAST:event_jButton1ActionPerformed
 //next button
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         System.out.println("it go next");
+        //adds one to x
+        x++;
+        //uses variable to fetch next card
     }//GEN-LAST:event_jButton3ActionPerformed
 //flip card
     private void jPanel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseClicked
