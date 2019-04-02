@@ -23,6 +23,15 @@ public class FileIO {
         System.out.println("Save directory: " + saveDir);
         checkDir(saveDir);
         checkDir(ioDataDir);        
+        //Cards = fetchCards("test.json");
+        /*System.out.println("Cards: " + Cards.size());
+        fetchSets();
+        loadSet("test");
+        Cards.add(new CardEntry("Test", "A test thing"));
+        Cards.add(new CardEntry("yeet", "weow"));
+        Cards.add(new CardEntry("yaga", "not really"));
+        writeSet();
+        */
         
         // Check if a set exist at start
         if(lastSet.exists()){
@@ -38,6 +47,10 @@ public class FileIO {
             //cardEditor frame = new cardEditor();
             //frame.setVisible(true);
         }
+//        else{
+//            cardEditor frame = new cardEditor();
+//            frame.setVisible(true);
+//        }
     }
     
     // Loads supplied set and returns the list name, receiver must check for null!    
