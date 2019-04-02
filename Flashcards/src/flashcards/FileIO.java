@@ -127,7 +127,7 @@ public class FileIO {
     }
     
     // Fetchs a specific card
-    public CardEntry fetchCard(int loc){
+    public static CardEntry fetchCard(int loc){
         if(!Cards.isEmpty()){
             if(loc > 0 || loc <= Cards.size()){
                 return Cards.get(loc);
@@ -140,7 +140,7 @@ public class FileIO {
     }
     
     // returns the length of the loaded card set
-    public int fetchSetLength(){
+    public static int fetchSetLength(){
         return Cards.size();
     }
     
