@@ -135,7 +135,7 @@ public class FileIO {
     }
     
     // Fetchs a specific card
-    public CardEntry fetchCard(int loc){
+    public static CardEntry fetchCard(int loc){
         if(!Cards.isEmpty()){
             if(loc > 0 || loc <= Cards.size()){
                 return Cards.get(loc);
