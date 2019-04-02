@@ -22,7 +22,7 @@ public class FileIO {
     public FileIO(){
         System.out.println("Save directory: " + saveDir);
         checkDir(saveDir);
-        checkDir(ioDataDir);
+        checkDir(ioDataDir);        
         //Cards = fetchCards("test.json");
         /*System.out.println("Cards: " + Cards.size());
         fetchSets();
@@ -33,6 +33,7 @@ public class FileIO {
         writeSet();
         */
         
+        // Check if a set exist at start
         if(lastSet.exists()){
             try{
                 BufferedReader reader = new BufferedReader(new FileReader(lastSet));
@@ -42,6 +43,9 @@ public class FileIO {
             }catch(IOException e){
                 System.err.println("Error: " + e);
             }
+        }else{
+            //cardEditor frame = new cardEditor();
+            //frame.setVisible(true);
         }
 //        else{
 //            cardEditor frame = new cardEditor();
@@ -136,7 +140,7 @@ public class FileIO {
     }
     
     // Fetchs a specific card
-    public CardEntry fetchCard(int loc){
+    public static CardEntry fetchCard(int loc){
         if(!Cards.isEmpty()){
             if(loc > 0 || loc <= Cards.size()){
                 return Cards.get(loc);
@@ -148,9 +152,14 @@ public class FileIO {
         }
     }
     
-    public static void main(String[] args){
-        FileIO test = new FileIO();
+    // returns the length of the loaded card set
+    public static int fetchSetLength(){
+        return Cards.size();
     }
+    
+    /*public static void main(String[] args){
+        FileIO test = new FileIO();
+    }*/
     
     
     // Check if file directory exist
