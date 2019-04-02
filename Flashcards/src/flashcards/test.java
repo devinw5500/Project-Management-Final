@@ -5,7 +5,7 @@
  */
 package flashcards;
 
-import flashcards.FileIO.*;
+import static flashcards.FileIO.*;
 import java.util.ArrayList;
 
 /**
