@@ -11,7 +11,8 @@ import javax.swing.DefaultListModel;
 import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
 
-public class cardEditor extends javax.swing.JFrame {  
+public class cardEditor extends javax.swing.JFrame {
+    Object[][] data;
     /**
      * Creates new form NewJFrame
      */
@@ -99,6 +100,11 @@ public class cardEditor extends javax.swing.JFrame {
         });
 
         okButton.setText("OK");
+        okButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                okButtonActionPerformed(evt);
+            }
+        });
 
         cancelButton.setText("Cancel");
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
@@ -164,14 +170,45 @@ public class cardEditor extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
-        DefaultTableModel m = (DefaultTableModel) termTable.getModel();
-        m.addRow(new Object[]{"[insert term]", "[insert definition]"});
+        Object[][] temp = new Object[data.length+1][3];
+        for (int i = 0; i < data.length; i++){
+            temp[i][0] = data[i][0];
+            temp[i][1] = data[i][1];
+            temp[i][2] = data[i][2];
+        }
+        temp[data.length][0] = Color.BLACK;
+        temp[data.length][1] = "[insert word]";
+        temp[data.length][2] = "[insert definition]";
+        
+        data = temp;
+        termTable.setModel(new TableModel(data));
     }//GEN-LAST:event_addButtonActionPerformed
 
     private void remButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_remButtonActionPerformed
-        DefaultTableModel m = (DefaultTableModel) termTable.getModel();
-        if (termTable.getSelectedRowCount() > 0)
-            m.removeRow(termTable.getSelectedRow());
+        if (data.length >= 2) {
+            Object[][] temp = new Object[data.length - 1][3];
+            int found = 0;
+            for (int i = 0, ii = 0; i < data.length; i++) {
+              System.out.println("Selected row: " + termTable.getSelectedRow());
+                if (i == termTable.getSelectedRow()){
+                    found = 1;
+                    continue;                
+                }else{
+                    temp[i - found][0] = data[i][0];
+                    temp[i - found][1] = data[i][1];
+                    temp[i - found][2] = data[i][2];
+                }
+                /*temp[i][0] = data[ii][0];
+                temp[i][1] = data[ii][1];
+                temp[i][2] = data[ii][2];*/
+            }
+
+            data = temp;
+            termTable.setModel(new TableModel(data));
+            for(int i = 0; i < data.length; i++){
+                System.out.print(data[i][1]);
+            }
+        }
     }//GEN-LAST:event_remButtonActionPerformed
 
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
@@ -180,8 +217,7 @@ public class cardEditor extends javax.swing.JFrame {
 
     private void jList1ValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jList1ValueChanged
         ArrayList<CardEntry> cards = loadSet(jList1.getSelectedValue().toString());
-        // System.out.println(jList1.getSelectedValue());
-        Object[][] data = new Object[cards.size()][3];
+        data = new Object[cards.size()][3];
         for (int c = 0; c < cards.size(); c++){
             data[c][0] = cards.get(c).getColor();
             data[c][1] = cards.get(c).getWord();
@@ -189,6 +225,10 @@ public class cardEditor extends javax.swing.JFrame {
         };
         termTable.setModel(new TableModel(data));        
     }//GEN-LAST:event_jList1ValueChanged
+
+    private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
+         
+    }//GEN-LAST:event_okButtonActionPerformed
 
     
     public static void main(String args[]) {

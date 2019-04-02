@@ -48,7 +48,6 @@ public class TableModel extends AbstractTableModel {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        System.out.println(data.length);
         return data[rowIndex][columnIndex];
     }
 
