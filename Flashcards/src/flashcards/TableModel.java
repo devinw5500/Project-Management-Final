@@ -11,7 +11,7 @@ import javax.swing.table.AbstractTableModel;
 
 public class TableModel extends AbstractTableModel {
     Object[][] data;
-    String[] colNames = {"Color", "Word", "Definition"};
+    String[] colNames = {"Word", "Definition"};
     
     public TableModel(Object[][] data){
         this.data = data;
@@ -48,7 +48,6 @@ public class TableModel extends AbstractTableModel {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        System.out.println(data.length);
         return data[rowIndex][columnIndex];
     }
 

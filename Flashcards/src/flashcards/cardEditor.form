@@ -164,7 +164,7 @@
           </Properties>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JTable(data, headers)"/>
-            <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="Object[][] data = new Object[1][3];&#xa;String[] headers = {&quot;Color&quot;, &quot;Word&quot;, &quot;Definition&quot;};"/>
+            <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="Object[][] data = new Object[1][2];&#xa;String[] headers = {&quot;Word&quot;, &quot;Definition&quot;};"/>
           </AuxValues>
         </Component>
       </SubComponents>
@@ -207,6 +207,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="OK"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="okButtonActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="cancelButton">
       <Properties>
