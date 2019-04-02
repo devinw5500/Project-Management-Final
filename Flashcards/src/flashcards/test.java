@@ -5,6 +5,7 @@
  */
 package flashcards;
 
+import flashcards.FileIO.*;
 import java.util.ArrayList;
 
 /**
@@ -157,6 +158,8 @@ public class test extends javax.swing.JFrame {
         //adds one to x
         x++;
         //uses variable to fetch next card
+        fetchCard(x);
+        
     }//GEN-LAST:event_jButton3ActionPerformed
 //flip card
     private void jPanel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseClicked
