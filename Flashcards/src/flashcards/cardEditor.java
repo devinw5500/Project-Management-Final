@@ -179,7 +179,8 @@ public class cardEditor extends javax.swing.JFrame {
     }//GEN-LAST:event_cancelButtonActionPerformed
 
     private void jList1ValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jList1ValueChanged
-        ArrayList<CardEntry> cards = loadSet(jList1.getSelectedValue());
+        ArrayList<CardEntry> cards = loadSet(jList1.getSelectedValue().toString());
+        // System.out.println(jList1.getSelectedValue());
         Object[][] data = new Object[cards.size()][3];
         for (int c = 0; c < cards.size(); c++){
             data[c][0] = cards.get(c).getColor();

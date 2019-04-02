@@ -216,4 +216,5 @@ public class test extends javax.swing.JFrame {
     private static javax.swing.JPanel jPanel1;
     private static javax.swing.JLabel labelText;
     // End of variables declaration//GEN-END:variables
+
 }
