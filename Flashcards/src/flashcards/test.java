@@ -158,7 +158,7 @@ public class test extends javax.swing.JFrame {
         //adds one to x
         x++;
         //uses variable to fetch next card
-        fetchCard(x);
+        CardEntry scream = fetchCard(x);
         
     }//GEN-LAST:event_jButton3ActionPerformed
 //flip card
