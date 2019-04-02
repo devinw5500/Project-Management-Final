@@ -115,10 +115,10 @@ public class FileIO {
     }
     
     // Write current card set to file
-    public static void writeSet(){
+    private static void writeSet(){
         if(!Cards.isEmpty() && checkDir(saveDir)){
             try{
-                FileWriter file = new FileWriter(saveDir + "\\" + (activeFile));
+                FileWriter file = new FileWriter(saveDir + "\\" + (activeFile) + ".json");
                 String newWrite = gson.toJson(Cards);
                 file.write(newWrite);
                 file.close();
@@ -139,6 +139,7 @@ public class FileIO {
             Cards.clear();
         }
         Cards = newSet;
+        writeSet();
     }
     
     // Fetchs a specific card
