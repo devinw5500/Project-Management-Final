@@ -56,6 +56,7 @@ public class FileIO {
     // Loads supplied set and returns the list name, receiver must check for null!    
     public static ArrayList<CardEntry> loadSet(String fileName){
         activeFile = fileName;
+        //System.out.println(activeFile + " name");
         if(!Cards.isEmpty()){
             writeSet();
             Cards.clear();
@@ -64,9 +65,10 @@ public class FileIO {
             try{
                 BufferedReader reader = new BufferedReader(new FileReader(saveDir + "\\" + activeFile + ".json"));
                 ArrayList<CardEntry> in = gson.fromJson(reader, new TypeToken<ArrayList<CardEntry>>(){}.getType());
-                for(int i = 0; i < in.size(); i++){
-                    System.out.println(i + " - " + in.get(i).getWord());
-                }
+                Cards = in;
+                /*for(int i = 0; i < in.size(); i++){
+                    //System.out.println(i + " - " + in.get(i).getWord());
+                }*/
             }catch(IOException e){
                 System.err.println("Error: " + e);
             }
