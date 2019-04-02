@@ -42,10 +42,11 @@ public class FileIO {
             }catch(IOException e){
                 System.err.println("Error: " + e);
             }
-        }else{
-            cardEditor frame = new cardEditor();
-            frame.setVisible(true);
         }
+//        else{
+//            cardEditor frame = new cardEditor();
+//            frame.setVisible(true);
+//        }
     }
     
     // Loads supplied set and returns the list name, receiver must check for null!    

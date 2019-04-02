@@ -5,13 +5,13 @@
  */
 package flashcards;
 
-import java.io.File;
+import static flashcards.FileIO.*;
+import java.awt.Color;
 import javax.swing.DefaultListModel;
 import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
 
-public class cardEditor extends javax.swing.JFrame {
-    FileIO data = new FileIO();
+public class cardEditor extends javax.swing.JFrame {  
     /**
      * Creates new form NewJFrame
      */
@@ -26,20 +26,41 @@ public class cardEditor extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jList1 = new javax.swing.JList<>();
         addSetButton = new javax.swing.JButton();
         remSetButton = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         jScrollPane3 = new javax.swing.JScrollPane();
-        termTable = new javax.swing.JTable();
+        Object[][] data = new Object[1][3];
+        String[] headers = {"Color", "Word", "Definition"};
+        termTable = new javax.swing.JTable(data, headers);
         addButton = new javax.swing.JButton();
         remButton = new javax.swing.JButton();
         okButton = new javax.swing.JButton();
         cancelButton = new javax.swing.JButton();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(824, 370));
+
+        DefaultListModel model = new DefaultListModel();
+        try {
+            ArrayList<String> list = fetchSets();
+            for(String n : list) {
+                model.addElement(n);
+            }
+        }
+        catch (NullPointerException e){
+            model.addElement("Empty");
+        }
+        jList1.setModel(model);
+        jList1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jList1.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                jList1ValueChanged(evt);
+            }
+        });
+        jScrollPane2.setViewportView(jList1);
 
         addSetButton.setText("Add Card Set");
         addSetButton.setMaximumSize(new java.awt.Dimension(95, 32));
@@ -52,22 +73,7 @@ public class cardEditor extends javax.swing.JFrame {
         remSetButton.setPreferredSize(new java.awt.Dimension(95, 32));
 
         termTable.setAutoCreateRowSorter(true);
-        termTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Term", "Definition"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
+        termTable.setColumnSelectionAllowed(true);
         termTable.getTableHeader().setReorderingAllowed(false);
         jScrollPane3.setViewportView(termTable);
         termTable.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
@@ -100,20 +106,6 @@ public class cardEditor extends javax.swing.JFrame {
                 cancelButtonActionPerformed(evt);
             }
         });
-
-        DefaultListModel model = new DefaultListModel();
-        try {
-            ArrayList<String> list = data.fetchSets();
-            for(String n : list) {
-                model.addElement(n);
-            }
-        }
-        catch (NullPointerException e){
-            model.addElement("Empty");
-        }
-        jList1.setModel(model);
-        jList1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        jScrollPane2.setViewportView(jList1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -186,6 +178,17 @@ public class cardEditor extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_cancelButtonActionPerformed
 
+    private void jList1ValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jList1ValueChanged
+        ArrayList<CardEntry> cards = loadSet(jList1.getSelectedValue());
+        Object[][] data = new Object[cards.size()][3];
+        for (int c = 0; c < cards.size(); c++){
+            data[c][0] = cards.get(c).getColor();
+            data[c][1] = cards.get(c).getWord();
+            data[c][2] = cards.get(c).getDef();
+        };
+        termTable.setModel(new TableModel(data));        
+    }//GEN-LAST:event_jList1ValueChanged
+
     
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -224,7 +227,7 @@ public class cardEditor extends javax.swing.JFrame {
     private javax.swing.JButton addButton;
     private javax.swing.JButton addSetButton;
     private javax.swing.JButton cancelButton;
-    private javax.swing.JList<String> jList1;
+    public javax.swing.JList<String> jList1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator1;
@@ -233,8 +236,5 @@ public class cardEditor extends javax.swing.JFrame {
     private javax.swing.JButton remSetButton;
     private javax.swing.JTable termTable;
     // End of variables declaration//GEN-END:variables
-
-
-
 
 }
