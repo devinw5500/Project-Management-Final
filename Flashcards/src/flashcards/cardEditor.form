@@ -88,6 +88,32 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
+    <Container class="javax.swing.JScrollPane" name="jScrollPane2">
+      <AuxValues>
+        <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+      </AuxValues>
+
+      <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+      <SubComponents>
+        <Component class="javax.swing.JList" name="jList1">
+          <Properties>
+            <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="model" type="code"/>
+            </Property>
+            <Property name="selectionMode" type="int" value="0"/>
+          </Properties>
+          <Events>
+            <EventHandler event="valueChanged" listener="javax.swing.event.ListSelectionListener" parameters="javax.swing.event.ListSelectionEvent" handler="jList1ValueChanged"/>
+          </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="DefaultListModel model = new DefaultListModel();&#xa;try {&#xa;ArrayList&lt;String&gt; list = fetchSets();&#xa;    for(String n : list) {     &#xa;        model.addElement(n);&#xa;    }&#xa;}&#xa;catch (NullPointerException e){&#xa;    model.addElement(&quot;Empty&quot;);&#xa;}"/>
+            <AuxValue name="JavaCodeGenerator_SerializeTo" type="java.lang.String" value="cardEditor_jList1"/>
+            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+          </AuxValues>
+        </Component>
+      </SubComponents>
+    </Container>
     <Component class="javax.swing.JButton" name="addSetButton">
       <Properties>
         <Property name="text" type="java.lang.String" value="Add Card Set"/>
@@ -128,19 +154,18 @@
         <Component class="javax.swing.JTable" name="termTable">
           <Properties>
             <Property name="autoCreateRowSorter" type="boolean" value="true"/>
-            <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="2" rowCount="0">
-                <Column editable="true" title="Term" type="java.lang.String"/>
-                <Column editable="true" title="Definition" type="java.lang.String"/>
-              </Table>
-            </Property>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
               <TableColumnModel selectionModel="2"/>
             </Property>
+            <Property name="columnSelectionAllowed" type="boolean" value="true"/>
             <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
               <TableHeader reorderingAllowed="false" resizingAllowed="true"/>
             </Property>
           </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JTable(data, headers)"/>
+            <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="Object[][] data = new Object[1][2];&#xa;String[] headers = {&quot;Word&quot;, &quot;Definition&quot;};"/>
+          </AuxValues>
         </Component>
       </SubComponents>
     </Container>
@@ -182,6 +207,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="OK"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="okButtonActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="cancelButton">
       <Properties>
@@ -191,27 +219,5 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cancelButtonActionPerformed"/>
       </Events>
     </Component>
-    <Container class="javax.swing.JScrollPane" name="jScrollPane2">
-      <AuxValues>
-        <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
-      </AuxValues>
-
-      <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
-      <SubComponents>
-        <Component class="javax.swing.JList" name="jList1">
-          <Properties>
-            <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection code="model" type="code"/>
-            </Property>
-            <Property name="selectionMode" type="int" value="0"/>
-          </Properties>
-          <AuxValues>
-            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="DefaultListModel model = new DefaultListModel();&#xa;try {&#xa;ArrayList&lt;String&gt; list = data.fetchSets();&#xa;    for(String n : list) {     &#xa;        model.addElement(n);&#xa;}&#xa;}&#xa;catch (NullPointerException e){&#xa;    model.addElement(&quot;Empty&quot;);&#xa;}"/>
-            <AuxValue name="JavaCodeGenerator_SerializeTo" type="java.lang.String" value="cardEditor_jList1"/>
-            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
-          </AuxValues>
-        </Component>
-      </SubComponents>
-    </Container>
   </SubComponents>
 </Form>

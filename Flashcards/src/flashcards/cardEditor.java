@@ -5,13 +5,14 @@
  */
 package flashcards;
 
-import java.io.File;
+import static flashcards.FileIO.*;
+import java.awt.Color;
 import javax.swing.DefaultListModel;
 import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
 
 public class cardEditor extends javax.swing.JFrame {
-    FileIO data = new FileIO();
+    Object[][] data;
     /**
      * Creates new form NewJFrame
      */
@@ -26,20 +27,41 @@ public class cardEditor extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jList1 = new javax.swing.JList<>();
         addSetButton = new javax.swing.JButton();
         remSetButton = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         jScrollPane3 = new javax.swing.JScrollPane();
-        termTable = new javax.swing.JTable();
+        Object[][] data = new Object[1][2];
+        String[] headers = {"Word", "Definition"};
+        termTable = new javax.swing.JTable(data, headers);
         addButton = new javax.swing.JButton();
         remButton = new javax.swing.JButton();
         okButton = new javax.swing.JButton();
         cancelButton = new javax.swing.JButton();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(824, 370));
+
+        DefaultListModel model = new DefaultListModel();
+        try {
+            ArrayList<String> list = fetchSets();
+            for(String n : list) {
+                model.addElement(n);
+            }
+        }
+        catch (NullPointerException e){
+            model.addElement("Empty");
+        }
+        jList1.setModel(model);
+        jList1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jList1.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                jList1ValueChanged(evt);
+            }
+        });
+        jScrollPane2.setViewportView(jList1);
 
         addSetButton.setText("Add Card Set");
         addSetButton.setMaximumSize(new java.awt.Dimension(95, 32));
@@ -52,22 +74,7 @@ public class cardEditor extends javax.swing.JFrame {
         remSetButton.setPreferredSize(new java.awt.Dimension(95, 32));
 
         termTable.setAutoCreateRowSorter(true);
-        termTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Term", "Definition"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
+        termTable.setColumnSelectionAllowed(true);
         termTable.getTableHeader().setReorderingAllowed(false);
         jScrollPane3.setViewportView(termTable);
         termTable.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
@@ -93,6 +100,11 @@ public class cardEditor extends javax.swing.JFrame {
         });
 
         okButton.setText("OK");
+        okButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                okButtonActionPerformed(evt);
+            }
+        });
 
         cancelButton.setText("Cancel");
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
@@ -100,20 +112,6 @@ public class cardEditor extends javax.swing.JFrame {
                 cancelButtonActionPerformed(evt);
             }
         });
-
-        DefaultListModel model = new DefaultListModel();
-        try {
-            ArrayList<String> list = data.fetchSets();
-            for(String n : list) {
-                model.addElement(n);
-            }
-        }
-        catch (NullPointerException e){
-            model.addElement("Empty");
-        }
-        jList1.setModel(model);
-        jList1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        jScrollPane2.setViewportView(jList1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -172,19 +170,73 @@ public class cardEditor extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
-        DefaultTableModel m = (DefaultTableModel) termTable.getModel();
-        m.addRow(new Object[]{"[insert term]", "[insert definition]"});
+        Object[][] temp = new Object[data.length+1][2];
+        for (int i = 0; i < data.length; i++){
+            temp[i][0] = data[i][0];
+            temp[i][1] = data[i][1];
+        }
+        temp[data.length][0] = "[insert word]";
+        temp[data.length][1] = "[insert definition]";
+        
+        data = temp;
+        termTable.setModel(new TableModel(data));
     }//GEN-LAST:event_addButtonActionPerformed
 
     private void remButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_remButtonActionPerformed
-        DefaultTableModel m = (DefaultTableModel) termTable.getModel();
-        if (termTable.getSelectedRowCount() > 0)
-            m.removeRow(termTable.getSelectedRow());
+        if (data.length >= 2) {
+            Object[][] temp = new Object[data.length - 1][2];
+            int found = 0;
+            for (int i = 0, ii = 0; i < data.length; i++) {
+              System.out.println("Selected row: " + termTable.getSelectedRow());
+                if (i == termTable.getSelectedRow()){
+                    found = 1;
+                    continue;                
+                }else{
+                    temp[i - found][0] = data[i][0];
+                    temp[i - found][1] = data[i][1];
+
+                }
+                /*temp[i][0] = data[ii][0];
+                temp[i][1] = data[ii][1];
+                temp[i][2] = data[ii][2];*/
+            }
+
+            data = temp;
+            termTable.setModel(new TableModel(data));
+            for(int i = 0; i < data.length; i++){
+                System.out.print(data[i][1]);
+            }
+        }
     }//GEN-LAST:event_remButtonActionPerformed
 
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
         System.exit(0);
     }//GEN-LAST:event_cancelButtonActionPerformed
+
+    private void jList1ValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jList1ValueChanged
+        ArrayList<CardEntry> cards = loadSet(jList1.getSelectedValue().toString());
+        data = new Object[cards.size()][2];
+        for (int c = 0; c < cards.size(); c++){
+            data[c][0] = cards.get(c).getWord();
+            data[c][1] = cards.get(c).getDef();
+        };
+        termTable.setModel(new TableModel(data));        
+    }//GEN-LAST:event_jList1ValueChanged
+
+    private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
+        ArrayList<CardEntry> newSet = new ArrayList<CardEntry>();
+        for (int a = 0; a < termTable.getModel().getRowCount(); a++){
+            String addWord = termTable.getValueAt(a, 0).toString();
+            String addDef = termTable.getValueAt(a, 1).toString();
+            newSet.add(new CardEntry(addWord, addDef));            
+        }
+        updateSet(newSet);
+        
+        for (int x = 0; x < newSet.size(); x++){
+            System.out.println(newSet.get(x).getWord());
+            System.out.println(newSet.get(x).getDef() + "\n");
+        }
+    }//GEN-LAST:event_okButtonActionPerformed
 
     
     public static void main(String args[]) {
@@ -224,7 +276,7 @@ public class cardEditor extends javax.swing.JFrame {
     private javax.swing.JButton addButton;
     private javax.swing.JButton addSetButton;
     private javax.swing.JButton cancelButton;
-    private javax.swing.JList<String> jList1;
+    public javax.swing.JList<String> jList1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator1;
@@ -233,8 +285,5 @@ public class cardEditor extends javax.swing.JFrame {
     private javax.swing.JButton remSetButton;
     private javax.swing.JTable termTable;
     // End of variables declaration//GEN-END:variables
-
-
-
 
 }
