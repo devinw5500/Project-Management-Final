@@ -79,6 +79,11 @@ public class cardEditor extends javax.swing.JFrame {
         remSetButton.setMaximumSize(new java.awt.Dimension(95, 32));
         remSetButton.setMinimumSize(new java.awt.Dimension(95, 32));
         remSetButton.setPreferredSize(new java.awt.Dimension(95, 32));
+        remSetButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                remSetButtonActionPerformed(evt);
+            }
+        });
 
         cardTable.setAutoCreateRowSorter(true);
         cardTable.setColumnSelectionAllowed(true);
@@ -194,6 +199,8 @@ public class cardEditor extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+// <<editor-fold defaultstate="collapsed" desc="LISTENERS">
+ 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
         Object[][] temp = new Object[data.length+1][2];
         for (int i = 0; i < data.length; i++){
@@ -250,18 +257,8 @@ public class cardEditor extends javax.swing.JFrame {
 
     private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
         if (data != null) {
-            ArrayList<CardEntry> newSet = new ArrayList<CardEntry>();
-            for (int a = 0; a < cardTable.getModel().getRowCount(); a++) {
-                String addWord = cardTable.getValueAt(a, 0).toString();
-                String addDef = cardTable.getValueAt(a, 1).toString();
-                newSet.add(new CardEntry(addWord, addDef));
-            }
-            updateSet(newSet);
+            saveChanges();
             System.exit(0);
-            for (int x = 0; x < newSet.size(); x++) {
-                System.out.println(newSet.get(x).getWord());
-                System.out.println(newSet.get(x).getDef() + "\n");
-            }
         } else {
             System.exit(0);
         }
@@ -269,25 +266,18 @@ public class cardEditor extends javax.swing.JFrame {
 
     private void addSetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addSetButtonActionPerformed
         loadSet(JOptionPane.showInputDialog(null, "Enter a name for new set: "));
-        repaint();
+        updateList();
     }//GEN-LAST:event_addSetButtonActionPerformed
 
     private void applyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_applyButtonActionPerformed
-        ArrayList<CardEntry> newSet = new ArrayList<CardEntry>();
-            for (int a = 0; a < cardTable.getModel().getRowCount(); a++) {
-                String addWord = cardTable.getValueAt(a, 0).toString();
-                String addDef = cardTable.getValueAt(a, 1).toString();
-                newSet.add(new CardEntry(addWord, addDef));
-            }
-            updateSet(newSet);
-            System.exit(0);
-            for (int x = 0; x < newSet.size(); x++) {
-                System.out.println(newSet.get(x).getWord());
-                System.out.println(newSet.get(x).getDef() + "\n");
-            }
+        saveChanges();
     }//GEN-LAST:event_applyButtonActionPerformed
 
-    
+    private void remSetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_remSetButtonActionPerformed
+        removeSet(fileList.getSelectedValue());        
+        updateList();
+    }//GEN-LAST:event_remSetButtonActionPerformed
+// </editor-fold> +      
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -336,4 +326,28 @@ public class cardEditor extends javax.swing.JFrame {
     private javax.swing.JButton remSetButton;
     // End of variables declaration//GEN-END:variables
 
+    public void updateList(){
+        ArrayList<CardEntry> newSet = new ArrayList<CardEntry>();
+            for (int a = 0; a < cardTable.getModel().getRowCount(); a++) {
+                String addWord = cardTable.getValueAt(a, 0).toString();
+                String addDef = cardTable.getValueAt(a, 1).toString();
+                newSet.add(new CardEntry(addWord, addDef));
+            }
+            updateSet(newSet);
+
+            for (int x = 0; x < newSet.size(); x++) {
+                System.out.println(newSet.get(x).getWord());
+                System.out.println(newSet.get(x).getDef() + "\n");
+            }
+    }
+    
+    public void saveChanges(){
+        ArrayList<CardEntry> newSet = new ArrayList<CardEntry>();
+            for (int a = 0; a < cardTable.getModel().getRowCount(); a++) {
+                String addWord = cardTable.getValueAt(a, 0).toString();
+                String addDef = cardTable.getValueAt(a, 1).toString();
+                newSet.add(new CardEntry(addWord, addDef));
+            }
+            updateSet(newSet);
+    }
 }
