@@ -5,6 +5,7 @@
  */
 package flashcards;
 
+
 import java.util.ArrayList;
 
 /**
@@ -13,6 +14,11 @@ import java.util.ArrayList;
  */
 public class test extends javax.swing.JFrame {
 
+    FileIO fileio = new FileIO();
+    //int used for fetching cards
+    public int x = 0;
+    public String word, def;
+    
     private static ArrayList<CardEntry> cards = new ArrayList<CardEntry>();
     /**
      * Creates new form test
@@ -143,15 +149,42 @@ public class test extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 //previous button
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        System.out.println("it go prev");
+        
+        int size = fileio.fetchSetLength();
+        if (size != 0)
+        {
+            if(x == 0)
+                x = size - 1;
+            else
+                x--;
+            CardEntry scream = fileio.fetchCard(x);
+            word = scream.getWord();
+            def = scream.getDef();
+            labelText.setText(word);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 //next button
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        System.out.println("it go next");
+        
+        int size = fileio.fetchSetLength();
+        if (size != 0)
+        {
+            //adds one to x
+            if(x >= size-1)
+                x = 0;
+            else
+                x++;
+            //uses variable to fetch next card
+            CardEntry scream = fileio.fetchCard(x);
+            word = scream.getWord();
+            def = scream.getDef();
+            labelText.setText(word);
+        }
+        
     }//GEN-LAST:event_jButton3ActionPerformed
 //flip card
     private void jPanel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseClicked
-        labelText.setText("it flip");
+        labelText.setText(def);
     }//GEN-LAST:event_jPanel1MouseClicked
 //exits program
     private void jMenu1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu1ActionPerformed
@@ -163,7 +196,7 @@ public class test extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 //called in start up
     private void startUp(){
-        labelText.setText("not flip");
+        labelText.setText("No Card Set Selected");
         
     }
     /**
