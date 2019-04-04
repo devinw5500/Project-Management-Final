@@ -48,7 +48,7 @@ public class FileIO {
             activeFile = fileName;
             //System.out.println(activeFile + " name");
             if (!Cards.isEmpty()) {
-                writeSet();
+                writeSet(fileName);
                 Cards.clear();
             }
             if (!activeFile.equals("")) {
@@ -77,7 +77,7 @@ public class FileIO {
             System.out.println("AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH TEAR");
             activeFile = fileName;
             Cards.clear();
-            writeSet();
+            writeSet(fileName);
         }
         return null;
     }
@@ -113,10 +113,10 @@ public class FileIO {
     }
 
     // Write current card set to file
-    private static void writeSet() {
+    private static void writeSet(String fileName) {
         if (!Cards.isEmpty() && checkDir(saveDir)) {
             try {
-                FileWriter file = new FileWriter(saveDir + "\\" + (activeFile) + ".json");
+                FileWriter file = new FileWriter(saveDir + "\\" + (fileName) + ".json");
                 String newWrite = gson.toJson(Cards);
                 file.write(newWrite);
                 file.close();
@@ -127,7 +127,7 @@ public class FileIO {
         } else if (Cards.isEmpty()) {
             System.out.println("Writing empty set");
             try {
-                FileWriter file = new FileWriter(saveDir + "\\" + (activeFile) + ".json");
+                FileWriter file = new FileWriter(saveDir + "\\" + (fileName) + ".json");
                 Cards.add(new CardEntry("Example word", "Example definition"));
                 String newWrite = gson.toJson(Cards);
                 file.write(newWrite);
@@ -142,13 +142,11 @@ public class FileIO {
     }
 
     // Update our loaded set with its new data.
-    public static void updateSet(ArrayList<CardEntry> newSet) {
-        if (!Cards.isEmpty()) {
-            Cards.clear();
-        }
+    public static void updateSet(String fileName, ArrayList<CardEntry> newSet) {
+        Cards.clear();
         Cards = newSet;
         //System.out.println("Updating: " + Cards.size());
-        writeSet();
+        writeSet(fileName);
     }
 
     // Fetchs a specific card
