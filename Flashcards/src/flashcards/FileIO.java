@@ -40,13 +40,14 @@ public class FileIO {
                 BufferedReader reader = new BufferedReader(new FileReader(lastSet));
                 String last = reader.readLine();
                 loadSet(last);
+                System.out.println("SCREM");
 
             } catch (IOException e) {
                 System.err.println("Error: " + e);
             }
         } else {
-            //cardEditor frame = new cardEditor();
-            //frame.setVisible(true);
+            cardEditor frame = new cardEditor();
+            frame.setVisible(true);
         }
 //        else{
 //            cardEditor frame = new cardEditor();
@@ -167,8 +168,10 @@ public class FileIO {
 
     public static void removeSet(String fileName) {
         if (new File(saveDir + "\\" + fileName + ".json").exists()) {
+            System.out.println("Removing set: " + saveDir + "\\" + fileName + ".json");
             new File(saveDir + "\\" + fileName + ".json").delete();
         }
+        
     }
 
     // Check if file directory exist

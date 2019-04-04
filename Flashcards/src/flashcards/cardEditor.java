@@ -10,6 +10,7 @@ import java.awt.Color;
 import javax.swing.DefaultListModel;
 import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 public class cardEditor extends javax.swing.JFrame {
     Object[][] data;
@@ -28,16 +29,17 @@ public class cardEditor extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane2 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        fileList = new javax.swing.JList<>();
         addSetButton = new javax.swing.JButton();
         remSetButton = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         jScrollPane3 = new javax.swing.JScrollPane();
         Object[][] data = new Object[1][2];
         String[] headers = {"Word", "Definition"};
-        termTable = new javax.swing.JTable(data, headers);
+        cardTable = new javax.swing.JTable(data, headers);
         addButton = new javax.swing.JButton();
         remButton = new javax.swing.JButton();
+        applyButton = new javax.swing.JButton();
         okButton = new javax.swing.JButton();
         cancelButton = new javax.swing.JButton();
 
@@ -54,30 +56,40 @@ public class cardEditor extends javax.swing.JFrame {
         catch (NullPointerException e){
             model.addElement("Empty");
         }
-        jList1.setModel(model);
-        jList1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        jList1.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+        fileList.setModel(model);
+        fileList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        fileList.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
-                jList1ValueChanged(evt);
+                fileListValueChanged(evt);
             }
         });
-        jScrollPane2.setViewportView(jList1);
+        jScrollPane2.setViewportView(fileList);
 
         addSetButton.setText("Add Card Set");
         addSetButton.setMaximumSize(new java.awt.Dimension(95, 32));
         addSetButton.setMinimumSize(new java.awt.Dimension(95, 32));
         addSetButton.setPreferredSize(new java.awt.Dimension(95, 32));
+        addSetButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addSetButtonActionPerformed(evt);
+            }
+        });
 
         remSetButton.setText("Remove Card Set");
         remSetButton.setMaximumSize(new java.awt.Dimension(95, 32));
         remSetButton.setMinimumSize(new java.awt.Dimension(95, 32));
         remSetButton.setPreferredSize(new java.awt.Dimension(95, 32));
+        remSetButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                remSetButtonActionPerformed(evt);
+            }
+        });
 
-        termTable.setAutoCreateRowSorter(true);
-        termTable.setColumnSelectionAllowed(true);
-        termTable.getTableHeader().setReorderingAllowed(false);
-        jScrollPane3.setViewportView(termTable);
-        termTable.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        cardTable.setAutoCreateRowSorter(true);
+        cardTable.setColumnSelectionAllowed(true);
+        cardTable.getTableHeader().setReorderingAllowed(false);
+        jScrollPane3.setViewportView(cardTable);
+        cardTable.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 
         addButton.setText("Add >>");
         addButton.setMaximumSize(new java.awt.Dimension(95, 32));
@@ -99,7 +111,20 @@ public class cardEditor extends javax.swing.JFrame {
             }
         });
 
+        applyButton.setText("Apply");
+        applyButton.setMaximumSize(new java.awt.Dimension(69, 32));
+        applyButton.setMinimumSize(new java.awt.Dimension(69, 32));
+        applyButton.setPreferredSize(new java.awt.Dimension(69, 32));
+        applyButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                applyButtonActionPerformed(evt);
+            }
+        });
+
         okButton.setText("OK");
+        okButton.setMaximumSize(new java.awt.Dimension(69, 32));
+        okButton.setMinimumSize(new java.awt.Dimension(69, 32));
+        okButton.setPreferredSize(new java.awt.Dimension(69, 32));
         okButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 okButtonActionPerformed(evt);
@@ -119,23 +144,27 @@ public class cardEditor extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(addSetButton, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(remSetButton, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(remButton, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(27, 27, 27)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 581, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(okButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cancelButton)
-                .addGap(14, 14, 14))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(26, 26, 26)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(addSetButton, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(remSetButton, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(remButton, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(27, 27, 27)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 581, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(applyButton, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(okButton, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(cancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(12, 12, 12))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -155,14 +184,15 @@ public class cardEditor extends javax.swing.JFrame {
                                 .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(remButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(okButton)
-                    .addComponent(cancelButton))
+                    .addComponent(okButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(applyButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -179,7 +209,7 @@ public class cardEditor extends javax.swing.JFrame {
         temp[data.length][1] = "[insert definition]";
         
         data = temp;
-        termTable.setModel(new TableModel(data));
+        cardTable.setModel(new TableModel(data));
     }//GEN-LAST:event_addButtonActionPerformed
 
     private void remButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_remButtonActionPerformed
@@ -187,8 +217,8 @@ public class cardEditor extends javax.swing.JFrame {
             Object[][] temp = new Object[data.length - 1][2];
             int found = 0;
             for (int i = 0, ii = 0; i < data.length; i++) {
-              System.out.println("Selected row: " + termTable.getSelectedRow());
-                if (i == termTable.getSelectedRow()){
+              System.out.println("Selected row: " + cardTable.getSelectedRow());
+                if (i == cardTable.getSelectedRow()){
                     found = 1;
                     continue;                
                 }else{
@@ -202,7 +232,7 @@ public class cardEditor extends javax.swing.JFrame {
             }
 
             data = temp;
-            termTable.setModel(new TableModel(data));
+            cardTable.setModel(new TableModel(data));
             for(int i = 0; i < data.length; i++){
                 System.out.print(data[i][1]);
             }
@@ -213,30 +243,81 @@ public class cardEditor extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_cancelButtonActionPerformed
 
-    private void jList1ValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jList1ValueChanged
-        ArrayList<CardEntry> cards = loadSet(jList1.getSelectedValue().toString());
+    private void fileListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_fileListValueChanged
+        ArrayList<CardEntry> cards = loadSet(fileList.getSelectedValue().toString());
         data = new Object[cards.size()][2];
         for (int c = 0; c < cards.size(); c++){
             data[c][0] = cards.get(c).getWord();
             data[c][1] = cards.get(c).getDef();
         };
-        termTable.setModel(new TableModel(data));        
-    }//GEN-LAST:event_jList1ValueChanged
+        cardTable.setModel(new TableModel(data));        
+    }//GEN-LAST:event_fileListValueChanged
 
     private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
-        ArrayList<CardEntry> newSet = new ArrayList<CardEntry>();
-        for (int a = 0; a < termTable.getModel().getRowCount(); a++){
-            String addWord = termTable.getValueAt(a, 0).toString();
-            String addDef = termTable.getValueAt(a, 1).toString();
-            newSet.add(new CardEntry(addWord, addDef));            
-        }
-        updateSet(newSet);
-        
-        for (int x = 0; x < newSet.size(); x++){
-            System.out.println(newSet.get(x).getWord());
-            System.out.println(newSet.get(x).getDef() + "\n");
+        if (data != null) {
+            ArrayList<CardEntry> newSet = new ArrayList<CardEntry>();
+            for (int a = 0; a < cardTable.getModel().getRowCount(); a++) {
+                String addWord = cardTable.getValueAt(a, 0).toString();
+                String addDef = cardTable.getValueAt(a, 1).toString();
+                newSet.add(new CardEntry(addWord, addDef));
+            }
+            updateSet(newSet);
+            System.exit(0);
+            for (int x = 0; x < newSet.size(); x++) {
+                System.out.println(newSet.get(x).getWord());
+                System.out.println(newSet.get(x).getDef() + "\n");
+            }
+        } else {
+            System.exit(0);
         }
     }//GEN-LAST:event_okButtonActionPerformed
+
+    private void addSetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addSetButtonActionPerformed
+        loadSet(JOptionPane.showInputDialog(null, "Enter a name for new set: "));
+        DefaultListModel model = new DefaultListModel();
+        try {
+            ArrayList<String> list = fetchSets();
+            for (String n : list) {
+                model.addElement(n);
+            }
+        } catch (NullPointerException e) {
+            model.addElement("Empty");
+        }
+        fileList.setModel(model);
+    }//GEN-LAST:event_addSetButtonActionPerformed
+
+    private void applyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_applyButtonActionPerformed
+        ArrayList<CardEntry> newSet = new ArrayList<CardEntry>();
+            for (int a = 0; a < cardTable.getModel().getRowCount(); a++) {
+                String addWord = cardTable.getValueAt(a, 0).toString();
+                String addDef = cardTable.getValueAt(a, 1).toString();
+                newSet.add(new CardEntry(addWord, addDef));
+            }
+            updateSet(newSet);
+
+            for (int x = 0; x < newSet.size(); x++) {
+                System.out.println(newSet.get(x).getWord());
+                System.out.println(newSet.get(x).getDef() + "\n");
+            }
+    }//GEN-LAST:event_applyButtonActionPerformed
+
+    private void remSetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_remSetButtonActionPerformed
+        System.out.println(fileList.getSelectedIndex());
+        // removeSet(fileList.getSelectedValue());
+        
+        ArrayList<CardEntry> newSet = new ArrayList<CardEntry>();
+            for (int a = 0; a < cardTable.getModel().getRowCount(); a++) {
+                String addWord = cardTable.getValueAt(a, 0).toString();
+                String addDef = cardTable.getValueAt(a, 1).toString();
+                newSet.add(new CardEntry(addWord, addDef));
+            }
+            updateSet(newSet);
+
+            for (int x = 0; x < newSet.size(); x++) {
+                System.out.println(newSet.get(x).getWord());
+                System.out.println(newSet.get(x).getDef() + "\n");
+            }
+    }//GEN-LAST:event_remSetButtonActionPerformed
 
     
     public static void main(String args[]) {
@@ -275,15 +356,17 @@ public class cardEditor extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;
     private javax.swing.JButton addSetButton;
+    private javax.swing.JButton applyButton;
     private javax.swing.JButton cancelButton;
-    public javax.swing.JList<String> jList1;
+    private javax.swing.JTable cardTable;
+    public javax.swing.JList<String> fileList;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JButton okButton;
     private javax.swing.JButton remButton;
     private javax.swing.JButton remSetButton;
-    private javax.swing.JTable termTable;
     // End of variables declaration//GEN-END:variables
 
+    
 }
