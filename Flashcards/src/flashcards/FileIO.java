@@ -195,9 +195,11 @@ public class FileIO {
 
     public static void removeSet(String fileName) {
         System.out.println("removeSet");
-        if (new File(saveDir + "\\" + fileName + ".json").exists()) {
+        Cards.clear();
+        File toRemove = new File(saveDir + "\\" + fileName + ".json");
+        if (toRemove.exists()) {
             System.out.println("Removing set: " + saveDir + "\\" + fileName + ".json");
-            new File(saveDir + "\\" + fileName + ".json").delete();
+            toRemove.delete();
         }
         
     }
