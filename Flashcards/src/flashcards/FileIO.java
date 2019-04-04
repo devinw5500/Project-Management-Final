@@ -31,6 +31,7 @@ public class FileIO {
                 BufferedReader reader = new BufferedReader(new FileReader(lastSet));
                 String last = reader.readLine();
                 loadSet(last);
+                System.out.println("SCREM");
 
             } catch (IOException e) {
                 System.err.println("Error: " + e);
@@ -173,6 +174,7 @@ public class FileIO {
             System.out.println("Removing set: " + saveDir + "\\" + fileName + ".json");
             new File(saveDir + "\\" + fileName + ".json").delete();
         }
+        
     }
 
     public static void main(String args[]){
