@@ -70,8 +70,10 @@ public class FileIO {
                 } catch (IOException e) {
                     System.err.println("Error: " + e);
                 }
+                System.out.println("Card length on finish load: " + Cards.size());
                 return Cards;
             }
+            System.out.println("No cards, weird");
             return null;
         }else{
             System.out.println("oh no, hes not a thing TEAR");
@@ -95,6 +97,7 @@ public class FileIO {
                 } catch (IOException e) {
                     System.err.println("Error: " + e);
                 }
+                System.out.println("Card length on finish load: " + Cards.size());
                 return Cards;
         }
         //return null;
