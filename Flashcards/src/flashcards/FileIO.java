@@ -202,10 +202,10 @@ public class FileIO {
         
     }
 
-    public static void main(String args[]){
-        loadSet("AHHHH");
-        
-    }
+    /*public static void main(String args[]){
+        //loadSet("AHHHH");
+        //removeSet("AHHHH");
+    }*/
     
     // Check if file directory exist
     private static boolean checkDir(File dir) {
