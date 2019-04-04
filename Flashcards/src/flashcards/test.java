@@ -47,6 +47,7 @@ public class test extends javax.swing.JFrame {
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
+        jMenuItem2 = new javax.swing.JMenuItem();
 
         jLabel2.setText("Click to flip");
 
@@ -135,6 +136,15 @@ public class test extends javax.swing.JFrame {
                 jMenu2ActionPerformed(evt);
             }
         });
+
+        jMenuItem2.setText("Open Editor");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem2);
+
         jMenuBar1.add(jMenu2);
 
         setJMenuBar(jMenuBar1);
@@ -224,9 +234,15 @@ public class test extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenu2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu2ActionPerformed
-        cardEditor frame = new cardEditor();
+        
         
     }//GEN-LAST:event_jMenu2ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        cardEditor frame = new cardEditor();
+        frame.setVisible(true);
+        System.out.println("DOAUHD");
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
 //called in start up
     private void startUp(){
         CardEntry scream = fileio.fetchCard(x);
@@ -290,6 +306,7 @@ public class test extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
     private static javax.swing.JPanel jPanel1;
     private static javax.swing.JLabel labelText;
     private javax.swing.JLabel numCard;
