@@ -167,8 +167,10 @@ public class FileIO {
 
     public static void removeSet(String fileName) {
         if (new File(saveDir + "\\" + fileName + ".json").exists()) {
+            System.out.println("Removing set: " + saveDir + "\\" + fileName + ".json");
             new File(saveDir + "\\" + fileName + ".json").delete();
         }
+        
     }
 
     // Check if file directory exist
