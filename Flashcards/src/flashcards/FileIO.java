@@ -20,6 +20,7 @@ public class FileIO {
 
     // contructor
     public FileIO() {
+        System.out.println("Constructor ran");
         System.out.println("Save directory: " + saveDir);
         checkDir(saveDir);
         checkDir(ioDataDir);
@@ -43,6 +44,7 @@ public class FileIO {
 
     // Loads supplied set and returns the list name, receiver must check for null!    
     public static ArrayList<CardEntry> loadSet(String fileName) {
+        System.out.println("loadSet");
         if (new File(saveDir + "\\" + fileName + ".json").exists()) {
             //System.out.println(activeFile + " name");
             if (!Cards.isEmpty()) {
@@ -81,6 +83,7 @@ public class FileIO {
 
     // fetch saved sets
     public static ArrayList<String> fetchSets() {
+        System.out.println("fetchSet");
         ArrayList<String> sets = new ArrayList<String>();
         File[] fileNames = saveDir.listFiles();
         System.out.println(fileNames);
@@ -111,6 +114,7 @@ public class FileIO {
 
     // Write current card set to file
     private static void writeSet(String fileName) {
+        System.out.println("writeSet");
         if (!Cards.isEmpty() && checkDir(saveDir)) {
             try {
                 FileWriter file = new FileWriter(saveDir + "\\" + (fileName) + ".json");
@@ -140,6 +144,7 @@ public class FileIO {
 
     // Update our loaded set with its new data.
     public static void updateSet(String fileName, ArrayList<CardEntry> newSet) {
+        System.out.println("updateSet");
         Cards.clear();
         Cards = newSet;
         //System.out.println("Updating: " + Cards.size());
@@ -148,6 +153,7 @@ public class FileIO {
 
     // Fetchs a specific card
     public static CardEntry fetchCard(int loc) {
+        System.out.println("fetchCard");
         if (!Cards.isEmpty()) {
             if (loc > 0 || loc <= Cards.size()) {
                 return Cards.get(loc);
@@ -161,10 +167,12 @@ public class FileIO {
 
     // returns the length of the loaded card set
     public static int fetchSetLength() {
+        System.out.println("fetchSetLength");
         return Cards.size();
     }
 
     public static void removeSet(String fileName) {
+        System.out.println("removeSet");
         if (new File(saveDir + "\\" + fileName + ".json").exists()) {
             System.out.println("Removing set: " + saveDir + "\\" + fileName + ".json");
             new File(saveDir + "\\" + fileName + ".json").delete();
@@ -179,6 +187,7 @@ public class FileIO {
     
     // Check if file directory exist
     private static boolean checkDir(File dir) {
+        System.out.println("checkDir");
         if (dir.exists() == false) {
             if (dir.mkdirs()) {
                 return true;
