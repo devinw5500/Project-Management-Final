@@ -6,9 +6,7 @@
 package flashcards;
 
 import static flashcards.FileIO.*;
-import java.awt.Color;
 import javax.swing.DefaultListModel;
-import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
@@ -250,23 +248,15 @@ public class cardEditor extends javax.swing.JFrame {
             data[c][0] = cards.get(c).getWord();
             data[c][1] = cards.get(c).getDef();
         };
-        cardTable.setModel(new TableModel(data));        
+        cardTable.setModel(new TableModel(data));
+
+        System.out.println("Selected index: " + fileList.getSelectedIndex());
     }//GEN-LAST:event_fileListValueChanged
 
     private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
         if (data != null) {
-            ArrayList<CardEntry> newSet = new ArrayList<CardEntry>();
-            for (int a = 0; a < cardTable.getModel().getRowCount(); a++) {
-                String addWord = cardTable.getValueAt(a, 0).toString();
-                String addDef = cardTable.getValueAt(a, 1).toString();
-                newSet.add(new CardEntry(addWord, addDef));
-            }
-            updateSet(newSet);
+            saveChanges();
             System.exit(0);
-            for (int x = 0; x < newSet.size(); x++) {
-                System.out.println(newSet.get(x).getWord());
-                System.out.println(newSet.get(x).getDef() + "\n");
-            }
         } else {
             System.exit(0);
         }
@@ -274,49 +264,20 @@ public class cardEditor extends javax.swing.JFrame {
 
     private void addSetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addSetButtonActionPerformed
         loadSet(JOptionPane.showInputDialog(null, "Enter a name for new set: "));
-        DefaultListModel model = new DefaultListModel();
-        try {
-            ArrayList<String> list = fetchSets();
-            for (String n : list) {
-                model.addElement(n);
-            }
-        } catch (NullPointerException e) {
-            model.addElement("Empty");
-        }
-        fileList.setModel(model);
+        updateList();
     }//GEN-LAST:event_addSetButtonActionPerformed
 
     private void applyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_applyButtonActionPerformed
-        ArrayList<CardEntry> newSet = new ArrayList<CardEntry>();
-            for (int a = 0; a < cardTable.getModel().getRowCount(); a++) {
-                String addWord = cardTable.getValueAt(a, 0).toString();
-                String addDef = cardTable.getValueAt(a, 1).toString();
-                newSet.add(new CardEntry(addWord, addDef));
-            }
-            updateSet(newSet);
-
-            for (int x = 0; x < newSet.size(); x++) {
-                System.out.println(newSet.get(x).getWord());
-                System.out.println(newSet.get(x).getDef() + "\n");
-            }
+        saveChanges();
     }//GEN-LAST:event_applyButtonActionPerformed
 
     private void remSetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_remSetButtonActionPerformed
-        System.out.println(fileList.getSelectedIndex());
-        // removeSet(fileList.getSelectedValue());
+        String remove = fileList.getSelectedValue();
+        fileList.setSelectedIndex(0);
+        removeSet(remove);
+        updateList();
+        fileList.setSelectedIndex(0);
         
-        ArrayList<CardEntry> newSet = new ArrayList<CardEntry>();
-            for (int a = 0; a < cardTable.getModel().getRowCount(); a++) {
-                String addWord = cardTable.getValueAt(a, 0).toString();
-                String addDef = cardTable.getValueAt(a, 1).toString();
-                newSet.add(new CardEntry(addWord, addDef));
-            }
-            updateSet(newSet);
-
-            for (int x = 0; x < newSet.size(); x++) {
-                System.out.println(newSet.get(x).getWord());
-                System.out.println(newSet.get(x).getDef() + "\n");
-            }
     }//GEN-LAST:event_remSetButtonActionPerformed
 
     
@@ -368,5 +329,26 @@ public class cardEditor extends javax.swing.JFrame {
     private javax.swing.JButton remSetButton;
     // End of variables declaration//GEN-END:variables
 
+    public void updateList(){
+        DefaultListModel model = new DefaultListModel();
+        try {
+            ArrayList<String> list = fetchSets();
+            for (String n : list) {
+                model.addElement(n);
+            }
+        } catch (NullPointerException e) {
+            model.addElement("Empty");
+        }
+        fileList.setModel(model);
+    }
     
+    public void saveChanges(){
+        ArrayList<CardEntry> newSet = new ArrayList<CardEntry>();
+            for (int a = 0; a < cardTable.getModel().getRowCount(); a++) {
+                String addWord = cardTable.getValueAt(a, 0).toString();
+                String addDef = cardTable.getValueAt(a, 1).toString();
+                newSet.add(new CardEntry(addWord, addDef));
+            }
+            updateSet(fileList.getSelectedValue(), newSet);
+    }
 }
