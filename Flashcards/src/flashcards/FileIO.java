@@ -16,23 +16,14 @@ public class FileIO {
     private static ArrayList<CardEntry> Cards = new ArrayList<CardEntry>();
     private static Gson gson = new Gson();
     private static File saveDir = new File(".\\src\\savedSets"), ioDataDir = new File(".\\src\\IOData");
-    private static String activeFile = "";
     private static File lastSet = new File(ioDataDir + "\\lastSet.txt");
 
     // contructor
     public FileIO() {
+        System.out.println("Constructor ran");
         System.out.println("Save directory: " + saveDir);
         checkDir(saveDir);
         checkDir(ioDataDir);
-        //Cards = fetchCards("test.json");
-        /*System.out.println("Cards: " + Cards.size());
-        fetchSets();
-        loadSet("test");
-        Cards.add(new CardEntry("Test", "A test thing"));
-        Cards.add(new CardEntry("yeet", "weow"));
-        Cards.add(new CardEntry("yaga", "not really"));
-        writeSet();
-         */
 
         // Check if a set exist at start
         if (lastSet.exists()) {
@@ -41,6 +32,7 @@ public class FileIO {
                 String last = reader.readLine();
                 loadSet(last);
                 System.out.println("SCREM");
+                reader.close();
 
             } catch (IOException e) {
                 System.err.println("Error: " + e);
@@ -49,30 +41,28 @@ public class FileIO {
             cardEditor frame = new cardEditor();
             frame.setVisible(true);
         }
-//        else{
-//            cardEditor frame = new cardEditor();
-//            frame.setVisible(true);
-//        }
     }
 
     // Loads supplied set and returns the list name, receiver must check for null!    
     public static ArrayList<CardEntry> loadSet(String fileName) {
+        System.out.println("loadSet");
         if (new File(saveDir + "\\" + fileName + ".json").exists()) {
-            activeFile = fileName;
             //System.out.println(activeFile + " name");
             if (!Cards.isEmpty()) {
-                writeSet();
+                //writeSet(fileName);
                 Cards.clear();
             }
-            if (!activeFile.equals("")) {
+            if (!fileName.equals("")) {
                 try {
-                    BufferedReader reader = new BufferedReader(new FileReader(saveDir + "\\" + activeFile + ".json"));
+                    BufferedReader reader = new BufferedReader(new FileReader(saveDir + "\\" + fileName + ".json"));
                     ArrayList<CardEntry> in = gson.fromJson(reader, new TypeToken<ArrayList<CardEntry>>() {
                     }.getType());
                     Cards = in;
                     /*for(int i = 0; i < in.size(); i++){
                     //System.out.println(i + " - " + in.get(i).getWord());
+                    
                 }*/
+                    reader.close();
                 } catch (IOException e) {
                     System.err.println("Error: " + e);
                 }
@@ -83,15 +73,40 @@ public class FileIO {
                 } catch (IOException e) {
                     System.err.println("Error: " + e);
                 }
+                System.out.println("Card length on finish load: " + Cards.size());
                 return Cards;
             }
+            System.out.println("No cards, weird");
             return null;
+        }else{
+            System.out.println("oh no, hes not a thing TEAR");
+            Cards.clear();
+            writeSet(fileName);
+                try {
+                    BufferedReader reader = new BufferedReader(new FileReader(saveDir + "\\" + fileName + ".json"));
+                    ArrayList<CardEntry> in = gson.fromJson(reader, new TypeToken<ArrayList<CardEntry>>() {
+                    }.getType());
+                    Cards = in;
+                    reader.close();
+                } catch (IOException e) {
+                    System.err.println("Error: " + e);
+                }
+                try {
+                    FileWriter file = new FileWriter(lastSet);
+                    file.write((fileName));
+                    file.close();
+                } catch (IOException e) {
+                    System.err.println("Error: " + e);
+                }
+                System.out.println("Card length on finish load: " + Cards.size());
+                return Cards;
         }
-        return null;
+        //return null;
     }
 
     // fetch saved sets
     public static ArrayList<String> fetchSets() {
+        System.out.println("fetchSet");
         ArrayList<String> sets = new ArrayList<String>();
         File[] fileNames = saveDir.listFiles();
         System.out.println(fileNames);
@@ -121,10 +136,11 @@ public class FileIO {
     }
 
     // Write current card set to file
-    private static void writeSet() {
+    private static void writeSet(String fileName) {
+        System.out.println("writeSet");
         if (!Cards.isEmpty() && checkDir(saveDir)) {
             try {
-                FileWriter file = new FileWriter(saveDir + "\\" + (activeFile) + ".json");
+                FileWriter file = new FileWriter(saveDir + "\\" + (fileName) + ".json");
                 String newWrite = gson.toJson(Cards);
                 file.write(newWrite);
                 file.close();
@@ -133,23 +149,34 @@ public class FileIO {
             }
 
         } else if (Cards.isEmpty()) {
-            System.err.println("Card library is emtpy");
+            System.out.println("Writing empty set");
+            try {
+                FileWriter file = new FileWriter(saveDir + "\\" + (fileName) + ".json");
+                Cards.add(new CardEntry("Example word", "Example definition"));
+                String newWrite = gson.toJson(Cards);
+                file.write(newWrite);
+                file.close();
+            } catch (IOException e) {
+                System.err.println("Error: " + e);
+            }
+            
         } else if (checkDir(saveDir) == false) {
             System.err.println("Director fail");
         }
     }
 
     // Update our loaded set with its new data.
-    public static void updateSet(ArrayList<CardEntry> newSet) {
-        if (!Cards.isEmpty()) {
-            Cards.clear();
-        }
+    public static void updateSet(String fileName, ArrayList<CardEntry> newSet) {
+        System.out.println("updateSet");
+        Cards.clear();
         Cards = newSet;
-        writeSet();
+        //System.out.println("Updating: " + Cards.size());
+        writeSet(fileName);
     }
 
     // Fetchs a specific card
     public static CardEntry fetchCard(int loc) {
+        System.out.println("fetchCard");
         if (!Cards.isEmpty()) {
             if (loc > 0 || loc <= Cards.size()) {
                 return Cards.get(loc);
@@ -163,19 +190,33 @@ public class FileIO {
 
     // returns the length of the loaded card set
     public static int fetchSetLength() {
+        System.out.println("fetchSetLength");
         return Cards.size();
     }
 
     public static void removeSet(String fileName) {
-        if (new File(saveDir + "\\" + fileName + ".json").exists()) {
+        System.out.println("removeSet");
+        Cards.clear();
+        File toRemove = new File(saveDir + "\\" + fileName + ".json");
+        if (toRemove.exists()) {
             System.out.println("Removing set: " + saveDir + "\\" + fileName + ".json");
-            new File(saveDir + "\\" + fileName + ".json").delete();
+            if(toRemove.delete()){
+                System.out.println("Worked");
+            }else{
+                System.out.println("Failed");
+            }
         }
         
     }
 
+    public static void main(String args[]){
+        //loadSet("AHHHH");
+        removeSet("test");
+    }
+    
     // Check if file directory exist
     private static boolean checkDir(File dir) {
+        System.out.println("checkDir");
         if (dir.exists() == false) {
             if (dir.mkdirs()) {
                 return true;
