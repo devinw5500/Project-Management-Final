@@ -278,8 +278,15 @@ public class cardEditor extends javax.swing.JFrame {
     }//GEN-LAST:event_applyButtonActionPerformed
 
     private void remSetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_remSetButtonActionPerformed
-        String remove = fileList.getSelectedValue();
-        FileIO.removeSet(remove);       
+        try {
+            String remove = fileList.getSelectedValue();
+            removeSet(remove);
+            fileList.setSelectedIndex(0);
+            updateList();
+        } catch (Exception e) {
+            System.out.println(e.getCause());
+            System.out.println(e.getMessage());
+        }
     }//GEN-LAST:event_remSetButtonActionPerformed
 
     
