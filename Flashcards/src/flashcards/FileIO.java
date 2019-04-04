@@ -16,7 +16,6 @@ public class FileIO {
     private static ArrayList<CardEntry> Cards = new ArrayList<CardEntry>();
     private static Gson gson = new Gson();
     private static File saveDir = new File(".\\src\\savedSets"), ioDataDir = new File(".\\src\\IOData");
-    private static String activeFile = "";
     private static File lastSet = new File(ioDataDir + "\\lastSet.txt");
 
     // contructor
@@ -45,15 +44,14 @@ public class FileIO {
     // Loads supplied set and returns the list name, receiver must check for null!    
     public static ArrayList<CardEntry> loadSet(String fileName) {
         if (new File(saveDir + "\\" + fileName + ".json").exists()) {
-            activeFile = fileName;
             //System.out.println(activeFile + " name");
             if (!Cards.isEmpty()) {
                 writeSet(fileName);
                 Cards.clear();
             }
-            if (!activeFile.equals("")) {
+            if (!fileName.equals("")) {
                 try {
-                    BufferedReader reader = new BufferedReader(new FileReader(saveDir + "\\" + activeFile + ".json"));
+                    BufferedReader reader = new BufferedReader(new FileReader(saveDir + "\\" + fileName + ".json"));
                     ArrayList<CardEntry> in = gson.fromJson(reader, new TypeToken<ArrayList<CardEntry>>() {
                     }.getType());
                     Cards = in;
@@ -75,7 +73,6 @@ public class FileIO {
             return null;
         }else{
             System.out.println("AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH TEAR");
-            activeFile = fileName;
             Cards.clear();
             writeSet(fileName);
         }
