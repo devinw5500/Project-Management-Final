@@ -32,6 +32,7 @@ public class FileIO {
                 String last = reader.readLine();
                 loadSet(last);
                 System.out.println("SCREM");
+                reader.close();
 
             } catch (IOException e) {
                 System.err.println("Error: " + e);
@@ -59,7 +60,9 @@ public class FileIO {
                     Cards = in;
                     /*for(int i = 0; i < in.size(); i++){
                     //System.out.println(i + " - " + in.get(i).getWord());
+                    
                 }*/
+                    reader.close();
                 } catch (IOException e) {
                     System.err.println("Error: " + e);
                 }
@@ -84,9 +87,7 @@ public class FileIO {
                     ArrayList<CardEntry> in = gson.fromJson(reader, new TypeToken<ArrayList<CardEntry>>() {
                     }.getType());
                     Cards = in;
-                    /*for(int i = 0; i < in.size(); i++){
-                    //System.out.println(i + " - " + in.get(i).getWord());
-                }*/
+                    reader.close();
                 } catch (IOException e) {
                     System.err.println("Error: " + e);
                 }
@@ -199,15 +200,19 @@ public class FileIO {
         File toRemove = new File(saveDir + "\\" + fileName + ".json");
         if (toRemove.exists()) {
             System.out.println("Removing set: " + saveDir + "\\" + fileName + ".json");
-            toRemove.delete();
+            if(toRemove.delete()){
+                System.out.println("Worked");
+            }else{
+                System.out.println("Failed");
+            }
         }
         
     }
 
-    /*public static void main(String args[]){
+    public static void main(String args[]){
         //loadSet("AHHHH");
-        //removeSet("AHHHH");
-    }*/
+        removeSet("test");
+    }
     
     // Check if file directory exist
     private static boolean checkDir(File dir) {
