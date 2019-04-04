@@ -24,15 +24,6 @@ public class FileIO {
         System.out.println("Save directory: " + saveDir);
         checkDir(saveDir);
         checkDir(ioDataDir);
-        //Cards = fetchCards("test.json");
-        /*System.out.println("Cards: " + Cards.size());
-        fetchSets();
-        loadSet("test");
-        Cards.add(new CardEntry("Test", "A test thing"));
-        Cards.add(new CardEntry("yeet", "weow"));
-        Cards.add(new CardEntry("yaga", "not really"));
-        writeSet();
-         */
 
         // Check if a set exist at start
         if (lastSet.exists()) {
@@ -45,13 +36,9 @@ public class FileIO {
                 System.err.println("Error: " + e);
             }
         } else {
-            //cardEditor frame = new cardEditor();
-            //frame.setVisible(true);
+            cardEditor frame = new cardEditor();
+            frame.setVisible(true);
         }
-//        else{
-//            cardEditor frame = new cardEditor();
-//            frame.setVisible(true);
-//        }
     }
 
     // Loads supplied set and returns the list name, receiver must check for null!    
@@ -85,6 +72,10 @@ public class FileIO {
                 return Cards;
             }
             return null;
+        }else{
+            activeFile = fileName;
+            Cards.clear();
+            writeSet();
         }
         return null;
     }
@@ -132,7 +123,15 @@ public class FileIO {
             }
 
         } else if (Cards.isEmpty()) {
-            System.err.println("Card library is emtpy");
+            System.out.println("Writing empty set");
+            try {
+                FileWriter file = new FileWriter(saveDir + "\\" + (activeFile) + ".json");
+                file.write("");
+                file.close();
+            } catch (IOException e) {
+                System.err.println("Error: " + e);
+            }
+            
         } else if (checkDir(saveDir) == false) {
             System.err.println("Director fail");
         }
@@ -167,10 +166,16 @@ public class FileIO {
 
     public static void removeSet(String fileName) {
         if (new File(saveDir + "\\" + fileName + ".json").exists()) {
+            System.out.println("Removing set: " + saveDir + "\\" + fileName + ".json");
             new File(saveDir + "\\" + fileName + ".json").delete();
         }
     }
 
+    public static void main(String args[]){
+        //loadSet("ITestYes");
+        
+    }
+    
     // Check if file directory exist
     private static boolean checkDir(File dir) {
         if (dir.exists() == false) {
