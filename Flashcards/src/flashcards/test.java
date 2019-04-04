@@ -41,6 +41,8 @@ public class test extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         labelText = new javax.swing.JLabel();
+        numCard = new javax.swing.JLabel();
+        cardSide = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -77,19 +79,35 @@ public class test extends javax.swing.JFrame {
         labelText.setForeground(new java.awt.Color(255, 255, 255));
         labelText.setText("front");
 
+        numCard.setText("jLabel1");
+
+        cardSide.setText("jLabel1");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(172, 172, 172)
-                .addComponent(labelText)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(172, 172, 172)
+                        .addComponent(labelText)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(numCard)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(cardSide)))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(90, 90, 90)
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(numCard)
+                    .addComponent(cardSide))
+                .addGap(63, 63, 63)
                 .addComponent(labelText)
                 .addContainerGap(91, Short.MAX_VALUE))
         );
@@ -162,6 +180,8 @@ public class test extends javax.swing.JFrame {
             def = scream.getDef();
             labelText.setText(word);
         }
+        numCard.setText("" + (x + 1));
+        cardSide.setText("Word");
     }//GEN-LAST:event_jButton1ActionPerformed
 //next button
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -180,11 +200,14 @@ public class test extends javax.swing.JFrame {
             def = scream.getDef();
             labelText.setText(word);
         }
+        numCard.setText("" + (x + 1));
+        cardSide.setText("Word");
         
     }//GEN-LAST:event_jButton3ActionPerformed
 //flip card
     private void jPanel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseClicked
         labelText.setText(def);
+        cardSide.setText("Definition");
     }//GEN-LAST:event_jPanel1MouseClicked
 //exits program
     private void jMenu1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu1ActionPerformed
@@ -196,8 +219,18 @@ public class test extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 //called in start up
     private void startUp(){
-        labelText.setText("No Card Set Selected");
-        
+        CardEntry scream = fileio.fetchCard(x);
+            word = scream.getWord();
+            def = scream.getDef();
+            labelText.setText(word);
+        numCard.setText("" + (x + 1));
+        numCard.setBackground(new java.awt.Color(255, 255, 255));
+        numCard.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        numCard.setForeground(new java.awt.Color(255, 255, 255));
+        cardSide.setBackground(new java.awt.Color(255, 255, 255));
+        cardSide.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        cardSide.setForeground(new java.awt.Color(255, 255, 255));
+        cardSide.setText("Word");
     }
     /**
      * @param args the command line arguments
@@ -239,6 +272,7 @@ public class test extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel cardSide;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel2;
@@ -248,6 +282,7 @@ public class test extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem1;
     private static javax.swing.JPanel jPanel1;
     private static javax.swing.JLabel labelText;
+    private javax.swing.JLabel numCard;
     // End of variables declaration//GEN-END:variables
 
 }
