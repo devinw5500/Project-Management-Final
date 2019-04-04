@@ -238,27 +238,33 @@ public class cardEditor extends javax.swing.JFrame {
     }//GEN-LAST:event_remButtonActionPerformed
 
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
-        System.exit(0);
+        dispose();
     }//GEN-LAST:event_cancelButtonActionPerformed
 
     private void fileListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_fileListValueChanged
-        ArrayList<CardEntry> cards = loadSet(fileList.getSelectedValue().toString());
-        data = new Object[cards.size()][2];
-        for (int c = 0; c < cards.size(); c++){
-            data[c][0] = cards.get(c).getWord();
-            data[c][1] = cards.get(c).getDef();
-        };
-        cardTable.setModel(new TableModel(data));
-
+        System.out.println(fileList.getSelectedValue());
+        if (fileList.getSelectedIndex() < 0)
+            fileList.setSelectedIndex(0);
+        
+        if (fileList.getSelectedValue() != null) {
+            ArrayList<CardEntry> cards = loadSet(fileList.getSelectedValue());
+            data = new Object[cards.size()][2];
+            for (int c = 0; c < cards.size(); c++) {
+                data[c][0] = cards.get(c).getWord();
+                data[c][1] = cards.get(c).getDef();
+            };
+            cardTable.setModel(new TableModel(data));
+        }
+        
         System.out.println("Selected index: " + fileList.getSelectedIndex());
     }//GEN-LAST:event_fileListValueChanged
 
     private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
         if (data != null) {
             saveChanges();
-            System.exit(0);
+            dispose();
         } else {
-            System.exit(0);
+            dispose();
         }
     }//GEN-LAST:event_okButtonActionPerformed
 
@@ -273,11 +279,7 @@ public class cardEditor extends javax.swing.JFrame {
 
     private void remSetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_remSetButtonActionPerformed
         String remove = fileList.getSelectedValue();
-        fileList.setSelectedIndex(0);
-        removeSet(remove);
-        updateList();
-        fileList.setSelectedIndex(0);
-        
+        FileIO.removeSet(remove);       
     }//GEN-LAST:event_remSetButtonActionPerformed
 
     
