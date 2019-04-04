@@ -48,7 +48,7 @@ public class FileIO {
         if (new File(saveDir + "\\" + fileName + ".json").exists()) {
             //System.out.println(activeFile + " name");
             if (!Cards.isEmpty()) {
-                writeSet(fileName);
+                //writeSet(fileName);
                 Cards.clear();
             }
             if (!fileName.equals("")) {
@@ -74,11 +74,30 @@ public class FileIO {
             }
             return null;
         }else{
-            System.out.println("AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH TEAR");
+            System.out.println("oh no, hes not a thing TEAR");
             Cards.clear();
             writeSet(fileName);
+                try {
+                    BufferedReader reader = new BufferedReader(new FileReader(saveDir + "\\" + fileName + ".json"));
+                    ArrayList<CardEntry> in = gson.fromJson(reader, new TypeToken<ArrayList<CardEntry>>() {
+                    }.getType());
+                    Cards = in;
+                    /*for(int i = 0; i < in.size(); i++){
+                    //System.out.println(i + " - " + in.get(i).getWord());
+                }*/
+                } catch (IOException e) {
+                    System.err.println("Error: " + e);
+                }
+                try {
+                    FileWriter file = new FileWriter(lastSet);
+                    file.write((fileName));
+                    file.close();
+                } catch (IOException e) {
+                    System.err.println("Error: " + e);
+                }
+                return Cards;
         }
-        return null;
+        //return null;
     }
 
     // fetch saved sets
