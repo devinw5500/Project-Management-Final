@@ -73,6 +73,7 @@ public class FileIO {
             }
             return null;
         }else{
+            System.out.println("AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH TEAR");
             activeFile = fileName;
             Cards.clear();
             writeSet();
@@ -126,7 +127,9 @@ public class FileIO {
             System.out.println("Writing empty set");
             try {
                 FileWriter file = new FileWriter(saveDir + "\\" + (activeFile) + ".json");
-                file.write("");
+                Cards.add(new CardEntry("Example word", "Example definition"));
+                String newWrite = gson.toJson(Cards);
+                file.write(newWrite);
                 file.close();
             } catch (IOException e) {
                 System.err.println("Error: " + e);
@@ -143,6 +146,7 @@ public class FileIO {
             Cards.clear();
         }
         Cards = newSet;
+        //System.out.println("Updating: " + Cards.size());
         writeSet();
     }
 
@@ -172,7 +176,7 @@ public class FileIO {
     }
 
     public static void main(String args[]){
-        //loadSet("ITestYes");
+        loadSet("AHHHH");
         
     }
     
