@@ -6,6 +6,7 @@
 package flashcards;
 
 
+import java.awt.Color;
 import java.util.ArrayList;
 
 /**
@@ -37,12 +38,17 @@ public class test extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel2 = new javax.swing.JLabel();
+        jMenuBar2 = new javax.swing.JMenuBar();
+        jMenu3 = new javax.swing.JMenu();
+        jMenu4 = new javax.swing.JMenu();
         jButton1 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
-        labelText = new javax.swing.JLabel();
         numCard = new javax.swing.JLabel();
         cardSide = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        labelText = new javax.swing.JTextArea();
+        jLabel3 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -50,6 +56,12 @@ public class test extends javax.swing.JFrame {
         jMenuItem2 = new javax.swing.JMenuItem();
 
         jLabel2.setText("Click to flip");
+
+        jMenu3.setText("File");
+        jMenuBar2.add(jMenu3);
+
+        jMenu4.setText("Edit");
+        jMenuBar2.add(jMenu4);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -75,14 +87,24 @@ public class test extends javax.swing.JFrame {
             }
         });
 
-        labelText.setBackground(new java.awt.Color(255, 255, 255));
-        labelText.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        labelText.setForeground(new java.awt.Color(255, 255, 255));
-        labelText.setText("front");
-
         numCard.setText("jLabel1");
 
         cardSide.setText("jLabel1");
+
+        labelText.setEditable(false);
+        labelText.setBackground(new java.awt.Color(102, 0, 102));
+        labelText.setColumns(20);
+        labelText.setLineWrap(true);
+        labelText.setRows(5);
+        labelText.setDisabledTextColor(new java.awt.Color(222, 222, 222));
+        labelText.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                labelTextMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(labelText);
+
+        jLabel3.setText("Click anywhere on the card to flip it");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -90,14 +112,18 @@ public class test extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(numCard)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(cardSide)
-                .addContainerGap())
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(167, 167, 167)
-                .addComponent(labelText)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jScrollPane1)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(numCard)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 411, Short.MAX_VALUE)
+                                .addComponent(cardSide)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -106,9 +132,10 @@ public class test extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(numCard)
                     .addComponent(cardSide))
-                .addGap(63, 63, 63)
-                .addComponent(labelText)
-                .addContainerGap(91, Short.MAX_VALUE))
+                .addGap(18, 18, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 191, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel3))
         );
 
         jMenu1.setText("File");
@@ -151,22 +178,24 @@ public class test extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
             .addGroup(layout.createSequentialGroup()
-                .addGap(99, 99, 99)
-                .addComponent(jButton1)
-                .addGap(86, 86, 86)
-                .addComponent(jButton3)
-                .addContainerGap(98, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton1)
+                        .addGap(98, 98, 98)
+                        .addComponent(jButton3)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(15, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
@@ -233,6 +262,14 @@ public class test extends javax.swing.JFrame {
             isFlipped = false;
         }
     }//GEN-LAST:event_jPanel1MouseClicked
+    public void newSetLoaded()
+    {
+        CardEntry scream = fileio.fetchCard(x);
+        word = scream.getWord();
+        def = scream.getDef();
+        labelText.setText(word);
+        x = 0;
+    }
 //exits program
     private void jMenu1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu1ActionPerformed
         //does nothing
@@ -252,12 +289,36 @@ public class test extends javax.swing.JFrame {
         frame.setVisible(true);
         System.out.println("DOAUHD");
     }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void labelTextMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelTextMouseClicked
+        if(!isFlipped)
+        {
+            labelText.setText(def);
+            cardSide.setText("Definition");
+            isFlipped = true;
+        }
+        else if(isFlipped)
+        {
+            labelText.setText(word);
+            cardSide.setText("Word");
+            isFlipped = false;
+        }
+    }//GEN-LAST:event_labelTextMouseClicked
 //called in start up
     private void startUp(){
         CardEntry scream = fileio.fetchCard(x);
+        if(scream != null)
+        {
             word = scream.getWord();
             def = scream.getDef();
             labelText.setText(word);
+        }
+        else
+        {
+            word = "No Word!";
+            def = "No Definition!";
+            labelText.setText(word);
+        }
         numCard.setText("" + (x + 1));
         numCard.setBackground(new java.awt.Color(255, 255, 255));
         numCard.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
@@ -266,6 +327,8 @@ public class test extends javax.swing.JFrame {
         cardSide.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         cardSide.setForeground(new java.awt.Color(255, 255, 255));
         cardSide.setText("Word");
+        labelText.setForeground(Color.WHITE);
+        jLabel3.setForeground(Color.WHITE);
     }
     /**
      * @param args the command line arguments
@@ -311,13 +374,18 @@ public class test extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuBar jMenuBar2;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private static javax.swing.JPanel jPanel1;
-    private static javax.swing.JLabel labelText;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextArea labelText;
     private javax.swing.JLabel numCard;
     // End of variables declaration//GEN-END:variables
 
