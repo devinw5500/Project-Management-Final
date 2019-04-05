@@ -214,7 +214,7 @@ public class cardEditor extends javax.swing.JFrame {
         if (data.length >= 2) {
             Object[][] temp = new Object[data.length - 1][2];
             int found = 0;
-            for (int i = 0, ii = 0; i < data.length; i++) {
+            for (int i = 0; i < data.length; i++) {
               System.out.println("Selected row: " + cardTable.getSelectedRow());
                 if (i == cardTable.getSelectedRow()){
                     found = 1;
